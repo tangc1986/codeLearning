@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 
-// solution_tc 
+/* solution_tc 
 void moveChars(char *str, unsigned int n)
 {
     unsigned int len = strlen(str);
@@ -18,8 +18,9 @@ void moveChars(char *str, unsigned int n)
         str[j-1] = tmp_chr;
     }
 }
+*/
 
-// solution_01
+/* solution_01
 void LeftShiftOne(char* s, int n)
 {
     char t = s[0];      //保存第一个字符     
@@ -37,13 +38,33 @@ void LeftRotateString(char* s, int n, int m)
         LeftShiftOne(s, n);
     }
 }
+*/
+
+// solution_02
+void ReverseString(char *s, int from, int to)
+{
+    while (from < to)
+    {
+        char t = s[from];
+        s[from++] = s[to];
+        s[to--] = t;
+    }
+}
+
+void LeftRotateString(char *s, int n, int m)
+{
+    m %= n;
+    ReverseString(s, 0, m-1);
+    ReverseString(s, m, n-1);
+    ReverseString(s, 0, n-1);
+}
 
 int main(int argc, char const *argv[])
 {
     /* code */
-    char test_chr[] = "abcdef";
+    char test_chr[] = "tangchao";
     printf("source string is %s\n", test_chr);
-    moveChars(test_chr, 2);
+    LeftRotateString(test_chr, 8, 3);
     printf("result string is %s\n", test_chr);
 
     return 0;
