@@ -60,7 +60,7 @@ set_nodelay_mode()
     int termflags;
     termflags = fcntl(0, F_GETFL);
     termflags |= O_NDELAY;
-    fcntl(0, F_SETEL, termflags);
+    fcntl(0, F_SETFL, termflags);
 }
 
 tty_mode(int how)
@@ -75,6 +75,6 @@ tty_mode(int how)
     else
     {
         tcsetattr(0, TCSANOW, &original_mode);
-        fcntl(0, F_SETEL, original_flags);
+        fcntl(0, F_SETFL, original_flags);
     }
 }
