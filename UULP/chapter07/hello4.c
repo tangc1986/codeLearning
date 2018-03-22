@@ -15,8 +15,10 @@ main()
         addstr("Hello, world");
         if (i % 2 == 1)
             standend();
+        refresh();
+        sleep(1);
+        move(i, i+i);
+        addstr("            ");
     }
-    refresh();
-    getch();
     endwin();
 }
