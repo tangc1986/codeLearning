@@ -9,7 +9,7 @@ main()
 {
     char * message = "Hello";
     char * blank   = "     ";
-    int    dir     = +10;
+    int    dir     = +1;
     int    pos     = LEFTEDGE;
 
     initscr();
