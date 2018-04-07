@@ -6,8 +6,8 @@
 
 int execute(char * argv[])
 {
-    int pid;
-    int child_info = -1;
+    int    pid;
+    int    child_info = -1;
 
     if (argv[0] == NULL)
         return 0;

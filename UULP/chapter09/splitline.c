@@ -50,9 +50,9 @@ char ** splitline(char * line)
     if (line == NULL)
         return NULL;
 
-    args = emalloc(BUFSIZ);
+    args     = emalloc(BUFSIZ);
     bufspace = BUFSIZ;
-    spots = BUFSIZ / sizeof(char *);
+    spots    = BUFSIZ / sizeof(char *);
 
     while (*cp != '\0')
     {
@@ -82,7 +82,7 @@ char * newstr(char * s, int l)
 {
     char * rv = emalloc(l + 1);
 
-    rv[1] = '\0';
+    rv[l] = '\0';
     strncpy(rv, s, l);
     return rv;
 }
