@@ -99,3 +99,49 @@ void VLlist()
     }
 }
 
+int VLenviron2table(char * env[])
+{
+    int  i;
+    char * newstring;
+
+    for (i = 0; env[i] != NULL; i++)
+    {
+        if (i == MAXVARS)
+            return 0;
+        newstring = malloc(1 + strlen(env[i]));
+        if (newstring == NULL)
+            return 0;
+        strcpy(newstring, env[i]);
+        tab[i].str = newstring;
+        tab[i].global = 1;
+    }
+    while (i < MAXVARS)
+    {
+        tab[i].str = NULL;
+        tab[i++].global = 0;
+    }
+    return 1;
+}
+
+char ** VLtable2environ()
+{
+    int    i,
+           j,
+           n = 0;
+    char   * * envtab;
+
+    for (i = 0; i < MAXVARS && tab[i].str != NULL; i++)
+        if (tab[i].global == 1)
+            n++;
+
+    envtab = (char * *)malloc((n + 1) * sizeof(char *));
+
+    if (envtab == NULL)
+        return NULL;
+
+    for (i = 0, j = 0; i < MAXVARS && tab[i].str != NULL; i++)
+        if (tab[i].global == 1)
+            envtab[j++] = tab[i].str;
+    envtab[j] = NULL;
+    return envtab;
+}
