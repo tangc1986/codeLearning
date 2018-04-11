@@ -50,7 +50,7 @@ be_bc(int todc[2], int fromdc[2])
     if (fpout == NULL || fpin == NULL)
         fatal("Error convering pipes to streams");
 
-    while (printf("tinybc: "), fgets(message, BUFSIZ, stdin) !=NULL)
+    while (printf("tinybc: "), fgets(message, BUFSIZ, stdin) != NULL)
     {
         if (sscanf(message, "%d%[-+*/^]%d",
                 &num1, operation, &num2) != 3)
