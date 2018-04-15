@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -9,6 +11,7 @@
 int make_dgram_server_socket(int);
 int get_internet_address(char *, int, int *, struct sockaddr_in *);
 void say_who_called(struct sockaddr_in *);
+void reply_to_sender(int, char *, struct sockaddr_in *, socklen_t);
 
 int main(int ac, char *av[])
 {
@@ -34,8 +37,17 @@ int main(int ac, char *av[])
         buf[msglen] = '\0';
         printf("dgrecv: got a message: %s\n", buf);
         say_who_called(&saddr);
+        reply_to_sender(sock, buf, &saddr, saddrlen);
     }
     return 0;
+}
+
+void reply_to_sender(int sock, char *msg, struct sockaddr_in *addrp, socklen_t len)
+{
+    char reply[BUFSIZ + BUFSIZ];
+
+    sprintf(reply, "Thanks for your %d char message\n", strlen(msg));
+    sento(sock, reply, strlen(reply), 0, addrp, len);
 }
 
 void say_who_called(struct sockaddr_in * addrp)
