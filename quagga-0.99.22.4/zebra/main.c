@@ -232,7 +232,7 @@ main (int argc, char **argv)
     {
       int opt;
   
-#ifdef HAVE_NETLINK  
+#ifdef HAVE_NETLINK         // CentOS环境中这个宏是1
       opt = getopt_long (argc, argv, "bdkf:i:z:hA:P:ru:g:vs:C", longopts, 0);
 #else
       opt = getopt_long (argc, argv, "bdkf:i:z:hA:P:ru:g:vC", longopts, 0);
