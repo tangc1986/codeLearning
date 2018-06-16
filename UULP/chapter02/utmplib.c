@@ -13,6 +13,7 @@
 #include        <fcntl.h>
 #include        <sys/types.h>
 #include        <utmp.h>
+#include        <unistd.h>
 
 #define NRECS   16
 #define NULLUT  ((struct utmp *)NULL)
@@ -60,6 +61,13 @@ int utmp_reload()
         cur_rec  = 0;
         return num_recs;
 }
+
+off_t utmp_seek(off_t record_offset, int base)
+{
+    int len     = sizeof(struct utmp);
+    return lseek(fd_utmp, (num_recs - cur_rec + record_offset) * len, base);
+}
+
 
 utmp_close()
 {
