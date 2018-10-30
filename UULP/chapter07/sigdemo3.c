@@ -1,48 +1,49 @@
-#include <stdio.h>
-#include <signal.h>
+/* sigdemo3.c
+ *	purpose:   show answers to signal questions
+ *	question1: does the handler stay in effect after a signal arrives?
+ *	question2: what if a signalX arrives while handling signalX?
+ *      question3: what if a signalX arrives while handling signalY?
+ *      question4: what happens to read() when a signal arrives?
+ */
 
-#define INPUTLEN 100
+#include	<stdio.h>
+#include	<signal.h>
 
-main(int ac, char * av[])
+#define	INPUTLEN	100
+
+main(int ac, char *av[])
 {
-    void inthander(int);
-    void quithander(int);
-    char input[INPUTLEN];
-    int nchars;
+	void	inthandler(int);
+	void	quithandler(int);
+	char	input[INPUTLEN];
+	int	nchars;
 
-    signal(SIGINT, inthander);
-    signal(SIGQUIT, quithander);
+	signal( SIGINT,  inthandler );		/* set handler */
+	signal( SIGQUIT, quithandler );		/* set handler */
 
-    do
-    {
-        printf("\nType a message\n");
-        nchars = read(0, input, (INPUTLEN-1));
-        if (nchars == -1)
-            perror("read returned an error");
-        else
-        {
-            input[nchars] = '\0';
-            printf("You typed: %s", input);
-        }
-    } while(strncmp(input, "quit", 4) != 0);
+	do {
+		printf("\nType a message\n");
+		nchars = read(0, input, (INPUTLEN-1));
+		if ( nchars == -1 )
+			perror("read returned an error");
+		else {
+			input[nchars] = '\0';
+			printf("You typed: %s", input);
+		}
+	} 
+	while( strncmp( input , "quit" , 4 ) != 0 );
 }
 
-void inthander(int s)
+void inthandler(int s)
 {
-    int rv;
-    void (*prev_qhandler)();
-    prev_qhandler = signal(SIGQUIT, SIG_IGN);
-
-    printf("Received signal %d.. waiting\n", s);
-    sleep(2);
-    printf("Leaving inthander\n");
-
-    signal(SIGQUIT, prev_qhandler);
+	printf(" Received signal %d .. waiting\n", s );
+	sleep(2);
+	printf("  Leaving inthandler \n");
 }
 
-void quithander(int s)
+void quithandler(int s)
 {
-    printf("Received signal %d.. waiting\n", s);
-    sleep(3);
-    printf("Leaving quithander\n");
+	printf(" Received signal %d .. waiting\n", s );
+	sleep(3);
+	printf("  Leaving quithandler \n");
 }
